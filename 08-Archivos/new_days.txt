@@ -1,0 +1,8 @@
+Days of the Week
+Lunes
+Martes
+Miercoles
+Jueves
+Viernes
+Sabado
+Domingo
