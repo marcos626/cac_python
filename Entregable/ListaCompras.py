@@ -11,34 +11,43 @@ segundo artículo recién aparecía el que agregué primero.
 """
 import os
 import pandas as pd
-from moduloSantillan import ListaCompras
-os.system('clear')
+from moduloSantillan import ListaCompras, Multiplataforma
 op1=int()
 op2=str()
-csvdir='/home/marcos/cac_python/Entregable' #defino la carpeta de trabajo
-print(f'mycsvdir es: {csvdir}')
-lc = ListaCompras(op1,op2,csvdir) #instancio la clase ListaCompras
-op1=lc.menuSeleccionArchivos()
-if op1==1: #Abrir lista existente
-    fileSelected = lc.AbrirArchivo(csvdir)
-elif op1==2: #Crear lista nueva
-    lc.CrearArchivo(csvdir)
-    input('El archivo se creó satisfactoriamente. Presione cualquier tecla para continuar')
-    op1=lc.menuSeleccionArchivos()
-elif op1==3: #Eliminar lista
-    borrar=lc.AbrirArchivo(csvdir)
-    os.remove(borrar)
-    input('El archivo se borró satisfactoriamente. Presione cualquier tecla para continuar')
-    op1=lc.menuSeleccionArchivos()
-elif op1==4:
-    print('Salir')
+lc = ListaCompras(op1,op2) #instancio la clase ListaCompras
+mf = Multiplataforma()
+mf.clear_screen()
+
+while op1!=4: # Bucle de selección de archivos
+    try:
+        mf.clear_screen()
+        op1=lc.menuSeleccionArchivos()
+        if op1==1: #Abrir lista existente
+            fileSelected = lc.AbrirArchivo()
+            break
+        elif op1==2: #Crear lista nueva
+            fileSelected = lc.CrearArchivo()
+            break
+            input('El archivo se creó satisfactoriamente. Presione cualquier tecla para continuar')
+        elif op1==3: #Eliminar lista
+            fileSelected=lc.AbrirArchivo()
+            os.remove(fileSelected)
+            input('El archivo se borró satisfactoriamente. Presione cualquier tecla para continuar')
+            break
+        elif op1==4:
+            print('Salir')
+        else: 
+            input('Eligió una opción inexistente. Presione cualquier tecla para volver al menú de selección de listas de compras')
+    except ValueError:
+            print('ValueError: Se esperaba un entero, ingresó un caracter o un float?')
+            input('Presione cualquier tecla para continuar')
     
-"""----------- Menu Edición de listas ----------"""
+"""----------- Menu Edición de listas de compras ----------"""
 
 while op1!=4:
+    mf.clear_screen()
     op1=lc.menu_ABM_listas()
     if op1==1:   #Agregar artículos
-        os.system('clear')
         print(f'el archivo elegido es {fileSelected}')
         df=pd.read_csv(fileSelected)
         print(df)
@@ -50,7 +59,7 @@ while op1!=4:
             milista.write(cant + "," + articulo + "," + rubro + "\n")
               
     elif op1==2: #Eliminar artículos
-        os.system("clear")
+        mf.clear_screen()
         try:
             df=pd.read_csv(fileSelected)
             print(df)
@@ -62,8 +71,8 @@ while op1!=4:
             print('Intenta borrar un ítem inexistente')
         input('presione cualquier tecla para volver al menu de edición de la lista')
 
-    elif op1==3: #imprimir lista
-        os.system("clear")
+    elif op1==3: #mostrar lista
+        mf.clear_screen()
         df=pd.read_csv(fileSelected)
         print(df)
         #agrupar por rubro para mostrar ordenados
