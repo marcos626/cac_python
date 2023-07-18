@@ -1,4 +1,4 @@
-import tkinter as tk
+import tkinter as Tk
 from tkinter import *
 def mostrar(ventana):ventana.deiconify()
 def ocultar(ventana):ventana.withdraw()
