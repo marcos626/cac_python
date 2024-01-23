@@ -17,7 +17,7 @@ class Multiplataforma:
         platform.system returns the system/OS name, such as 'Linux', 'Darwin', 'Java', 'Windows'. 
         An empty string is returned if the value cannot be determined.
         """
-        os.system('cls' if platform.system == 'Windows' else 'clear')
+        os.system('cls' if platform.system() == 'Windows' else 'clear')
         return
     
     def normalizarRuta(ruta):
